@@ -7,6 +7,9 @@ const context = createContext({
     UserStore
 });
 
-const useStores = () => useContext(context);
+window.stores = {
+    AuthStore,
+    UserStore
+};
 
-export {useStores};
+export const useStores = () => useContext(context);

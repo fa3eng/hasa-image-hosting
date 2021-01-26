@@ -7,17 +7,11 @@ class AuthStore {
     constructor() {
         makeObservable(this);
     }
-    // 是否登录
-    @observable isLogin = false;
-    // 是否加载
-    @observable isLoading = false;
+
     // 用户信息?
     @observable values = {
         username: '',
         password: ''
-    }
-    @action setIsLogin(isLogin) {
-        this.isLogin = isLogin;
     }
     @action setUsername(username) {
         this.values.username = username;

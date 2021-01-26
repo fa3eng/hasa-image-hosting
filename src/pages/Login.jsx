@@ -3,6 +3,7 @@ import { Form, Input, Button } from 'antd';
 import { observer } from 'mobx-react'
 import styled from 'styled-components'
 import {useStores} from '../stores'
+import { useHistory } from 'react-router-dom'
 
 const layout = {
     labelCol: {
@@ -25,16 +26,17 @@ const Wrapper = styled.div`
 `
 
 // 给原来的组件添加监控
-const index = observer(() => {
+const Index = observer(() => {
 
     const {AuthStore} = useStores();
+    const history = useHistory();
 
     const onFinish = (values) => {
         AuthStore.setUsername(values.username);
         AuthStore.setPassword(values.password);
         AuthStore.login()
             .then(() => {
-                console.log('nice');
+                history.push('/');
             })
             .catch((error) => {
                 console.log(error);
@@ -45,14 +47,16 @@ const index = observer(() => {
         console.log('Failed:', errorInfo);
     };
 
+    // 判断规则
     const validatorUsername = (rule, value) => {
         if(/\W/.test(value)) return Promise.reject('只能是字母或者下划线');
         if(value.length < 4 || value.length > 10)  return Promise.reject('长度为4-10个字符');
         return Promise.resolve();
     }
-
+    
     return (
         <Wrapper>
+            <span>{}</span>
             <h1>登录</h1>
             <Form
                 {...layout}
@@ -100,5 +104,5 @@ const index = observer(() => {
     );
 })
 
-export default index;
+export default Index;
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Input, Button } from 'antd';
 import { observer } from 'mobx-react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import {useStores} from '../stores'
 
@@ -28,13 +29,13 @@ const Wrapper = styled.div`
 const index = observer(() => {
 
     const {AuthStore} = useStores();
-
+    const history = useHistory();
     const onFinish = (values) => {
         AuthStore.setUsername(values.username);
         AuthStore.setPassword(values.password);
         AuthStore.register()
             .then(() => {
-                console.log('注册成功,跳转到首页');
+                history.push('/login');
             })
             .catch((error) => {
                 console.log(error);

@@ -1,7 +1,10 @@
-import React, {useState} from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { NavLink, useHistory } from 'react-router-dom'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
 import {Button} from 'antd'
+
+import { useStores } from '../stores'
 
 const Header = styled.header`
     display: flex;
@@ -21,19 +24,32 @@ const StyleNavlink = styled(NavLink)`
 `;
 
 const Login = styled.div`
-   margin-left: auto;
+    margin-left: auto;
 `
 
 const StyleButton = styled(Button)`
     margin-left: 20px;
 `
-function Index() {
 
-    const [isLogin, setIsLogin] = useState(false);
+const Index = observer(() => {
+    const { UserStore, AuthStore } = useStores();
+    const history = useHistory();
+
+    const handleLogout = () => {
+        AuthStore.logout();
+    }
 
     const handleLogin = () => {
-        setIsLogin(true);
+        history.push('/login');
     }
+
+    const handleRegister = () => {
+        history.push('/register');
+    }
+
+    useEffect(()=>{
+        UserStore.pullUser();
+    },[])
 
     return (
         <Header>
@@ -44,18 +60,18 @@ function Index() {
             </nav>
             <Login>
                 {
-                    isLogin ? <>
-                        <span>meakle</span>
-                        <StyleButton type="primary">注销</StyleButton>
+                    UserStore.currentUser ? <>
+                        <span>{UserStore.currentUser.attributes.username}</span>
+                        <StyleButton type="primary" onClick= {handleLogout}>注销</StyleButton>
                     </> : <>
-                        <StyleButton type="primary" onClick = {handleLogin}>登录</StyleButton>
-                        <StyleButton type="primary">注册</StyleButton>
+                        <StyleButton type="primary" onClick= {handleLogin}>登录</StyleButton>
+                        <StyleButton type="primary" onClick= {handleRegister}>注册</StyleButton>
                     </>
                 }
             </Login>
         </Header>
     )
-}
+})
 
 
 export default Index;
