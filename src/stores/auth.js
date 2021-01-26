@@ -1,6 +1,12 @@
-import { observable, action } from "mobx";
+import { observable, action, makeObservable } from "mobx";
+import UserStore from './user'
+import { Auth } from '../models'
 
 class AuthStore {
+
+    constructor() {
+        makeObservable(this);
+    }
     // 是否登录
     @observable isLogin = false;
     // 是否加载
@@ -10,36 +16,47 @@ class AuthStore {
         username: '',
         password: ''
     }
-    @action setIsLogin(isLogin){
+    @action setIsLogin(isLogin) {
         this.isLogin = isLogin;
     }
-    @action setUsername(username){
+    @action setUsername(username) {
         this.values.username = username;
     }
-    @action setPassword(username){
+    @action setPassword(password) {
         this.values.password = password;
     }
+    // 登录操作
     @action login() {
-        console.log('登陆中...')
-        this.isLoading = true;
-        setTimeout(() => {
-            console.log('登录成功')
-            this.isLogin = true;
-            this.isLoading = false;
-        }, 1000)
+        return new Promise((resolve, reject) => {
+            Auth.login(this.values.username, this.values.password)
+                .then(user => {
+                    UserStore.pullUser();
+                    resolve(user);
+                }).catch(error => {
+                    UserStore.resetUser();
+                    reject(error);
+                })
+        })
     }
+    // 注册操作
     @action register() {
-        console.log('注册中...')
-        this.isLoading = true;
-        setTimeout(() => {
-            console.log('注册成功')
-            this.isLogin = true;
-            this.isLoading = false;
-        }, 1000)
+        return new Promise((resolve, reject) => {
+            Auth.register(this.values.username, this.values.password)
+                .then(user => {
+                    UserStore.pullUser();
+                    resolve(user);
+                }).catch(error => {
+                    UserStore.resetUser();
+                    reject(error);
+                })
+        })
     }
-    @action logout(){
-        console.log('已经注销')
+    // 注销操作
+    @action logout() {
+        Auth.logout();
+        UserStore.resetUser();
     }
 }
 
-export AuthStore;
+
+export default new AuthStore();
