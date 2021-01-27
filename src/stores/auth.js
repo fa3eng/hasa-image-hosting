@@ -1,6 +1,10 @@
 import { observable, action, makeObservable } from "mobx";
+import { message } from 'antd'
 import UserStore from './user'
+import HistoryStore from './history'
+import ImageStore from './image'
 import { Auth } from '../models'
+
 
 class AuthStore {
 
@@ -28,6 +32,7 @@ class AuthStore {
                     resolve(user);
                 }).catch(error => {
                     UserStore.resetUser();
+                    message.error('登录失败');
                     reject(error);
                 })
         })
@@ -41,6 +46,7 @@ class AuthStore {
                     resolve(user);
                 }).catch(error => {
                     UserStore.resetUser();
+                    message.error('注册失败');
                     reject(error);
                 })
         })
@@ -48,6 +54,8 @@ class AuthStore {
     // 注销操作
     @action logout() {
         Auth.logout();
+        HistoryStore.reset();
+        ImageStore.reset();
         UserStore.resetUser();
     }
 }
