@@ -24,7 +24,6 @@ cd meakle-image-hosting
 
 ```
 yarn install
-
 ```
 3. 启动项目
 ```
