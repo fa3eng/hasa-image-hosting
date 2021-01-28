@@ -31,7 +31,7 @@ const About = observer(() => {
             <p>目前大四，就读于内蒙古科技大学软件工程专业。对前端方向比较感兴趣，想从事前端开发。</p>
             <p>这是一个简单的图床，实现了用户的登录，注册，以及上传图片等基本的功能。</p>
             <p>这个项目使用React+React-Router+styled-components+Ant Design来组织页面，使用Mobx管理状态，LeanCloud作为后端保存数据。</p>
-            <p>来试一试吧～ 注册/登录</p>
+            <p>欢迎使用～</p>
         </AboutMe>
     )
 })

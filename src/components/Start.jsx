@@ -20,7 +20,7 @@ export default function Start() {
     const A = styled.a`
         display: inline-block;
         font-size: 20px;
-        animation: ${beat} 1500ms 700ms ease;
+        animation: ${beat} 2000ms 700ms 2;
         transition: all 1s;
         :hover{
             transform: scale(1.1);

@@ -58,8 +58,8 @@ const Index = observer(() => {
         <Header>
             <nav>
                 <StyleNavLink to = "/" activeClassName={"active"} exact>首页</StyleNavLink>
-                <StyleNavLink to = "/history">上传历史</StyleNavLink>
-                <StyleNavLink to = "/about">关于我</StyleNavLink>
+                <StyleNavLink to = "/history">历史</StyleNavLink>
+                <StyleNavLink to = "/about">关于</StyleNavLink>
             </nav>
             <Login>
                 {
