@@ -93,7 +93,7 @@ const ResultLink = observer((props) => {
 
                             <li>
                                 <h4>
-                                    <Popconfirm title="是否要复制内容到剪贴板？" okText="是" cancelText="否" onConfirm={copyLink(refURL, "HTML")}>
+                                    <Popconfirm title="是否要复制内容到剪贴板？" okText="是" cancelText="否" onConfirm={copyLink(refURL, "Markdown")}>
                                         <a>👉&nbsp;Markdown(复制):</a>
                                     </Popconfirm>
                                 </h4>
