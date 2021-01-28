@@ -4,12 +4,8 @@ import styled from 'styled-components'
 import { Input, Popconfirm, message } from 'antd';
 import copy from 'copy-to-clipboard';
 
-import { useStores } from '../stores'
-
-const Result = observer(() => {
-
-    const { ImageStore } = useStores();
-
+// 呜呜呜终于实现了一个组件的复用了
+const ResultLink = observer((props) => {
 
     // css in js
     const Img = styled.img`
@@ -17,7 +13,6 @@ const Result = observer(() => {
         max-width: 200px;
         max-height: 200px;
         box-shadow: 3px 3px 10px #d9d9d9;
-        /* border: 1px solid #d9d9d9; */
     `
     const Wrapper = styled.div`
         margin-top: 20px;
@@ -27,7 +22,7 @@ const Result = observer(() => {
     `
 
     const Container = styled.div`
-        display: flex;
+        display: flex !important;
         flex-wrap: wrap;
         margin-top: 30px;
         justify-content: space-between;
@@ -36,10 +31,9 @@ const Result = observer(() => {
     const StyleInput = styled(Input)`
         width: 550px;
     `
+    const serverFileUrl = props.url;
 
-    // 给个别名 这玩意实在是太长了
-    let serverFileUrl;
-    ImageStore.serverFile && (serverFileUrl = ImageStore.serverFile.attributes.url.attributes.url)
+    console.log(props);
 
     const refURL = useRef(null);
     const refHTML = useRef(null);
@@ -70,13 +64,10 @@ const Result = observer(() => {
     return (
         <div>
             <Wrapper>
-                <h2>上传结果</h2>
-                <hr />
-
                 <Container>
                     <div>
                         <h3>预览图片</h3>
-                        <a href={serverFileUrl} target="_blank"><Img src={serverFileUrl} alt="" /></a>
+                        <a href={serverFileUrl} target="_blank" rel="noreferrer"><Img src={serverFileUrl} alt="" /></a>
                     </div>
                     <div>
                         <h3>结果链接</h3>
@@ -118,4 +109,4 @@ const Result = observer(() => {
     )
 })
 
-export default Result;
+export default ResultLink;

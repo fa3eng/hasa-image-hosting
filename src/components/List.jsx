@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { observer } from 'mobx-react'
 import InfiniteScroll from 'react-infinite-scroller';
 import { List, Spin } from 'antd'
+import styled from 'styled-components'
+import ResultLink from './ResultLink'
 
 import { useStores } from '../stores'
 
@@ -12,6 +14,11 @@ const historyList = observer(() => {
     const loadMore = () => {
         HistoryStore.find();
     }
+
+    const MyListItem = styled(List.Item)`
+        border-top: 1px solid #ddd;
+        text-align: left;
+    `
 
     useEffect(() => {
         console.log('进入')
@@ -29,23 +36,21 @@ const historyList = observer(() => {
                 hasMore={!HistoryStore.isLoading && HistoryStore.hasMore}
                 useWindow={true}
             >
-                <List
-                    dataSource={HistoryStore.list}
-                    renderItem={
-                        item => <List.Item key={item.id}>
-                                <img src={item.attributes.url.attributes.url} alt="" style={{ height: '100px' }} />
-                                <h5>{item.attributes.filename}</h5>
-                                <a href={item.attributes.url.attributes.url} target="_blank" rel="noreferrer">链接</a>
-                                </List.Item>
-                        
+                <ul>
+                    {
+                        HistoryStore.list.map((item) => {
+                            return <li key={item.id}>
+                                <ResultLink url={item.attributes.url.attributes.url} />
+                                {HistoryStore.isLoading && HistoryStore.hasMore && (
+                                    <div>
+                                        <Spin thp="加载中..." />
+                                    </div>
+                                )}
+                            </li>
+                        })
                     }
-                >
-                    {HistoryStore.isLoading && HistoryStore.hasMore && (
-                        <div>
-                            <Spin thp="加载中" />
-                        </div>
-                    )}
-                </List>
+                </ul>
+                
             </InfiniteScroll>
         </>
     )

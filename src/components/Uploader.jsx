@@ -4,7 +4,7 @@ import { InboxOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react'
 
 import { useStores } from '../stores'
-import Result from './Result'
+import ResultLink from './ResultLink'
 
 const Uploader = observer(() => {
 
@@ -57,9 +57,8 @@ const Uploader = observer(() => {
                 </Dragger>
             </Spin>
             {
-                
                 ImageStore.serverFile ?
-                    <Result />
+                    <ResultLink url={ImageStore.serverFile.attributes.url.attributes.url} />
                     : <></>
             }
         </div>
