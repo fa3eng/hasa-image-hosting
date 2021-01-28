@@ -24,8 +24,9 @@ const Uploader = observer(() => {
                 message.error('只能上传svg, png, jpg, jpeg, gif格式的文件');
                 return false;
             }
-            if (file.size > 1014 * 1024) {
+            if (file.size > 1024 * 1024) {
                 message.error('图片最大1M');
+                return false;
             }
 
             ImageStore.setFile(file);
