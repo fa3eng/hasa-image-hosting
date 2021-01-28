@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { Skeleton } from 'antd';
+import { Spin } from 'antd';
 import styled from 'styled-components'
 
 import Header from './components/Header'
@@ -14,6 +14,7 @@ const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 
 const Main = styled.main`
+    text-align: center;
     margin: 20px 35px;
 `
 
@@ -22,7 +23,7 @@ export default function App() {
         <React.Fragment>
             <Header />
             <Main>
-                <Suspense fallback={<Skeleton paragraph={{ rows: 5 }} />} >
+                <Suspense fallback={<Spin tip="加载中" size="large"/>} >
                     <Switch>
                         <Route path="/" exact component={Home} />
                         <Route path="/history" component={History} />

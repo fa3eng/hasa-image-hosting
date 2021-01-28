@@ -22,7 +22,7 @@ export default function History() {
 
     return (
         <History>
-            <h1>history</h1>
+            <h1>上传历史</h1>
             <List />
         </History>
     )
