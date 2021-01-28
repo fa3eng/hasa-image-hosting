@@ -40,7 +40,6 @@ const Index = observer(() => {
 
     const handleLogout = () => {
         AuthStore.logout();
-        window.location.reload();
     }
 
     const handleLogin = () => {

@@ -1,15 +1,16 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import styled, {keyframes} from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { useStores } from '../stores'
 import { useHistory } from 'react-router-dom'
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin } from 'antd';
 import { UserOutlined, LockOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import FormItem from 'antd/lib/form/FormItem'
 
+
 // 给原来的组件添加监控
 const Index = observer(() => {
-
+    let flag = false;
     const { AuthStore } = useStores();
     const history = useHistory();
 
@@ -20,6 +21,7 @@ const Index = observer(() => {
         AuthStore.login()
             .then(() => {
                 history.push('/');
+                handleLogin();
             })
             .catch((error) => {
                 console.log(error);
@@ -79,58 +81,63 @@ const Index = observer(() => {
         history.push('/register');
     }
 
+    const handleLogin = () => {
+        flag = !flag;
+    }
+
     return (
-        <Wrapper>
-            <Form
-                name="normal_login"
-                className="login-form"
-                wrapperCol={{span:12, offset: 6}}
-                initialValues={{
-                    remember: true,
-                }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-            >
-                <FormItem><h1>登录</h1></FormItem>
-                <Form.Item
-                    name="username"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请输入用户名',
-                        },
-                        {
-                            validator: validatorUsername
-                        }
-                    ]}
+            <Wrapper>
+                <Form
+                    name="normal_login"
+                    className="login-form"
+                    wrapperCol={{ span: 12, offset: 6 }}
+                    initialValues={{
+                        remember: true,
+                    }}
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
                 >
-                    <StyleInput prefix={<UserOutlined className="site-form-item-icon" />} placeholder="用户名" />
-                </Form.Item>
-                <Form.Item
-                    name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请输入密码',
-                        },
-                    ]}
-                >
-                    <StyleInput
-                        prefix={<LockOutlined className="site-form-item-icon" />}
-                        type="password"
-                        placeholder="密码"
-                    />
-                </Form.Item>
 
-                <Form.Item>
-                    <StyleButton type="primary" htmlType="submit" className="login-form-button">
-                        Log in
+                    <FormItem><h1>登录</h1></FormItem>
+                    <Form.Item
+                        name="username"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入用户名',
+                            },
+                            {
+                                validator: validatorUsername
+                            }
+                        ]}
+                    >
+                        <StyleInput prefix={<UserOutlined className="site-form-item-icon" />} placeholder="用户名" />
+                    </Form.Item>
+                    <Form.Item
+                        name="password"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入密码',
+                            },
+                        ]}
+                    >
+                        <StyleInput
+                            prefix={<LockOutlined className="site-form-item-icon" />}
+                            type="password"
+                            placeholder="密码"
+                        />
+                    </Form.Item>
+
+                    <Form.Item>
+                        <StyleButton onClick={handleLogin} type="primary" htmlType="submit" className="login-form-button">
+                            登录
                     </StyleButton>
-                    <A onClick={handleClick}><ArrowRightOutlined/>&nbsp;即刻注册</A>
-                </Form.Item>
-            </Form>
+                        <A onClick={handleClick}><ArrowRightOutlined />&nbsp;即刻注册</A>
+                    </Form.Item>
+                </Form>
 
-        </Wrapper>
+            </Wrapper>
     );
 })
 
