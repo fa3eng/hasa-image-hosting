@@ -2,34 +2,56 @@ import React from 'react'
 import { Form, Input, Button } from 'antd';
 import { observer } from 'mobx-react'
 import { useHistory } from 'react-router-dom'
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
+import { UserOutlined, LockOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import {useStores} from '../stores'
-
-const layout = {
-    labelCol: {
-        span: 8,
-    },
-    wrapperCol: {
-        span: 16,
-    },
-};
-const tailLayout = {
-    wrapperCol: {
-        offset: 8,
-        span: 16,
-    },
-};
-
-const Wrapper = styled.div`
-    max-width: 600px;
-    margin: 30px auto;
-`
-
 
 const index = observer(() => {
 
     const {AuthStore} = useStores();
     const history = useHistory();
+
+
+        //#region 样式 
+    // 淡入动画效果, styled-components 暴露出的API
+    const fade = keyframes`
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    `
+
+    const Wrapper = styled.div`
+        max-width: 600px;
+        margin: 30px auto;
+        padding: 30px 20px;
+        border-radius: 10px;
+        box-shadow: 3px 3px 20px #bebebe;
+        background-color: #fff;
+        animation: ${fade} 1500ms ease;
+    `
+
+    const StyleButton = styled(Button)`
+        border-radius: 4px;
+    `
+
+    const A = styled.a`
+        margin-left: 20px;
+    `
+
+    const StyleInput = styled(Input)`
+        height: 40px;
+        border-radius: 4px;
+    `
+    //#endregion
+
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
     const onFinish = (values) => {
         AuthStore.setUsername(values.username);
         AuthStore.setPassword(values.password);
@@ -40,10 +62,6 @@ const index = observer(() => {
             .catch((error) => {
                 console.log(error);
             })
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
     };
 
     const validatorUsername = (rule, value) => {
@@ -59,17 +77,24 @@ const index = observer(() => {
         }
     })
 
+    const handleClick = () => {
+        history.push('/login');
+    }
+
     return (
         <Wrapper>
-            <h1>注册</h1>
             <Form
-                {...layout}
-                name="basic"
+                name="normal_login"
+                className="login-form"
+                wrapperCol={{span:12, offset: 6}}
+                initialValues={{
+                    remember: true,
+                }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
+                <Form.Item><h1>注册</h1></Form.Item>
                 <Form.Item
-                    label="用户名"
                     name="username"
                     rules={[
                         {
@@ -77,15 +102,13 @@ const index = observer(() => {
                             message: '请输入用户名',
                         },
                         {
-                            validator : validatorUsername
+                            validator: validatorUsername
                         }
                     ]}
                 >
-                    <Input />
+                    <StyleInput prefix={<UserOutlined className="site-form-item-icon" />} placeholder="用户名" />
                 </Form.Item>
-
                 <Form.Item
-                    label="密码"
                     name="password"
                     rules={[
                         {
@@ -102,11 +125,14 @@ const index = observer(() => {
                         }
                     ]}
                 >
-                    <Input.Password />
+                    <StyleInput
+                        prefix={<LockOutlined className="site-form-item-icon" />}
+                        type="password"
+                        placeholder="密码"
+                    />
                 </Form.Item>
 
                 <Form.Item
-                    label="确认密码"
                     name="confirmPassword"
                     rules={[
                         {
@@ -116,13 +142,19 @@ const index = observer(() => {
                         validateConfirm
                     ]}
                 >
-                    <Input.Password />
+                    <StyleInput
+                        prefix={<LockOutlined className="site-form-item-icon" />}
+                        type="password"
+                        placeholder="确认密码"
+                    />
                 </Form.Item>
 
-                <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
-                        提交
-                </Button>
+
+                <Form.Item>
+                    <StyleButton type="primary" htmlType="submit" className="login-form-button">
+                        注册
+                    </StyleButton>
+                    <A onClick={handleClick}><ArrowRightOutlined/>&nbsp;已有账号?</A>
                 </Form.Item>
             </Form>
 

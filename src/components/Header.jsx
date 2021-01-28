@@ -9,17 +9,18 @@ import { useStores } from '../stores'
 const Header = styled.header`
     display: flex;
     align-items: center;
-    padding: 15px 100px;
-    background-color: #02101f;
-    color: #fff;
+    padding: 12px 100px;
+    background-color: #ffffff;
+    color: #262626;
 `;
 
-const StyleNavlink = styled(NavLink)`
-    color: #fff;
+const StyleNavLink = styled(NavLink)`
+    color: #262626;
+    padding-bottom: 10px;
     margin-left: 40px;
 
     &.active{
-        border-bottom: 2px solid #fff;
+        border-bottom: 2px solid #3f90f7;
     }
 `;
 
@@ -29,6 +30,8 @@ const Login = styled.div`
 
 const StyleButton = styled(Button)`
     margin-left: 20px;
+    font-weight: bolder;
+    font-size: 14px;
 `
 
 const Index = observer(() => {
@@ -37,6 +40,7 @@ const Index = observer(() => {
 
     const handleLogout = () => {
         AuthStore.logout();
+        window.location.reload();
     }
 
     const handleLogin = () => {
@@ -54,9 +58,9 @@ const Index = observer(() => {
     return (
         <Header>
             <nav>
-                <StyleNavlink to = "/" activeClassName={"active"} exact>首页</StyleNavlink>
-                <StyleNavlink to = "/history">上传历史</StyleNavlink>
-                <StyleNavlink to = "/about">关于我</StyleNavlink>
+                <StyleNavLink to = "/" activeClassName={"active"} exact>首页</StyleNavLink>
+                <StyleNavLink to = "/history">上传历史</StyleNavLink>
+                <StyleNavLink to = "/about">关于我</StyleNavLink>
             </nav>
             <Login>
                 {

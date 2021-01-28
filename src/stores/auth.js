@@ -32,7 +32,7 @@ class AuthStore {
                     resolve(user);
                 }).catch(error => {
                     UserStore.resetUser();
-                    message.error('登录失败');
+                    message.error('账号或密码错误, 请尝试重新登录');
                     reject(error);
                 })
         })
@@ -42,11 +42,11 @@ class AuthStore {
         return new Promise((resolve, reject) => {
             Auth.register(this.values.username, this.values.password)
                 .then(user => {
-                    UserStore.pullUser();
+                    // UserStore.pullUser();
                     resolve(user);
                 }).catch(error => {
                     UserStore.resetUser();
-                    message.error('注册失败');
+                    message.error('该用户名已存在, 注册失败');
                     reject(error);
                 })
         })

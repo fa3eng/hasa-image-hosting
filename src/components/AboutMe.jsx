@@ -1,28 +1,14 @@
 import React from 'react'
 import {observer} from 'mobx-react'
-import styled,{ keyframes } from 'styled-components'
+import styled from 'styled-components'
 
-const About = observer(() => {
-
-
-    // 淡入动画效果, styled-components 暴露出的API
-    const fade = keyframes`
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0px);
-    }
-    `
+const Tips = observer(() => {
 
     const AboutMe = styled.article`
         padding: 20px 40px;
         background-color: #fff;
         border-radius: 10px;
         font-size: 15px;
-        animation: ${fade} 1500ms ease;
     `
 
     return (
@@ -36,4 +22,4 @@ const About = observer(() => {
     )
 })
 
-export default About;
+export default Tips;
