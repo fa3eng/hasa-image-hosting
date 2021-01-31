@@ -12,7 +12,7 @@
 
 ## 预览
 ### 在线预览
-[在线预览](http://meakle.com/meakle-image-hosting/build/index.html#/)
+[在线预览](http://meakle.com/meakle-image-hosting/build/#/)
 ### 本地预览
 1. 克隆该项目到本地，并进入目录
 ```
